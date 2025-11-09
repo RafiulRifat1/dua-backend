@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS duas (
   name TEXT NOT NULL,
   title TEXT NOT NULL,
   arabic TEXT,
-  transliteration TEXT,
   reference TEXT,
   slug TEXT,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
