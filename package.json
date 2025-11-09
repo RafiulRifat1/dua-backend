@@ -118,7 +118,8 @@
   "scripts": {
     "dev": "ts-node --files src/app.ts",
     "start": "node dist/app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "seed": "ts-node src/db/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -133,6 +134,7 @@
   },
   "homepage": "https://github.com/RafiulRifat1/dua-backend#readme",
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
