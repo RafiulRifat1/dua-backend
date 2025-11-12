@@ -24,6 +24,21 @@ server.get('/categories/subcategories/duas', (req: Request, res: Response) => {
     res.json(db.prepare('SELECT * FROM duas').all());
 });
 
+server.get('/categories/:categoryID/subcategories', (req: Request, res: Response) => {
+    const categoryID = req.params.categoryID;
+    res.json(db.prepare('SELECT * FROM subcategories WHERE category_id = ?').all(categoryID));
+});
+
+server.get('/duas/:subcategoryID', (req: Request, res: Response) => {
+    const subcategoryID = req.params.subcategoryID;
+    res.json(db.prepare('SELECT * FROM duas WHERE subcategory_id = ?').all(subcategoryID));
+});
+
+server.get('/dua/id/:duaID', (req: Request, res: Response) => {
+    const duaID = req.params.duaID;
+    res.json(db.prepare('SELECT * FROM duas WHERE id = ?').get(duaID));
+});
+
 
 
 server.listen(port, () => {
