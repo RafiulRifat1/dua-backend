@@ -20,7 +20,7 @@ server.get('/categories/subcategories' , (req: Request, res: Response) => {
     res.json(db.prepare('SELECT * FROM subcategories').all())
 });
 
-server.get('/duas', (req: Request, res: Response) => {
+server.get('/categories/subcategories/duas', (req: Request, res: Response) => {
     res.json(db.prepare('SELECT * FROM duas').all());
 });
 
