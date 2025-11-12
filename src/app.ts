@@ -1,5 +1,5 @@
 import express from 'express';
-import e, {Application, Request, Response} from 'express';
+import {Application, Request, Response} from 'express';
 import cors from 'cors';
 
 const app: Application = express();
@@ -15,6 +15,14 @@ app.get('/api/duas', (req: Request, res: Response) => {
         message: 'ok',
     })
 });
+
+// 404 error
+
+app.use('*', (req: Request, res: Response) => {
+    res.status(404).json({
+        error: 'Not Found'
+    });
+})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
