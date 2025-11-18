@@ -18,10 +18,11 @@ CREATE TABLE IF NOT EXISTS duas (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   category_id INTEGER NOT NULL,
   subcategory_id INTEGER,
-  name TEXT NOT NULL,
   title TEXT NOT NULL,
   arabic TEXT,
   reference TEXT,
+  transliteration TEXT,
+  translation TEXT,
   slug TEXT,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
   FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL

@@ -1,4 +1,4 @@
-import Database , {Database as DBD, Row } from 'better-sqlite3';
+import Database , {Database as DBD } from 'better-sqlite3';
 import path from 'path';
 
 
