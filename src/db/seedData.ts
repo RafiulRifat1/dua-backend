@@ -5,7 +5,7 @@ import path from 'path';
 
 
 const db = new Database('src/db/database.sqlite3');
-const schema = fs.readFileSync(path.resolve(__dirname, 'db/schema.sql'), 'utf8');
+const schema = fs.readFileSync(path.resolve(__dirname, 'schema.sql'), 'utf8');
 db.exec(schema);
 
 db.exec(
@@ -17,10 +17,9 @@ db.exec(
 );
 
 
-
 const insertCategory = db.prepare('INSERT INTO categories ( name, slug) values (? , ? )');
 const insertSubcategory = db.prepare('INSERT INTO subcategories ( category_id,name, slug) values (?, ? , ? )');
-const insertDuas = db.prepare('INSERT INTO duas (category_id, subcategory_id, name, title, arabic, transliteration, translation, reference, slug) values (?,?,?,? , ?,?,?,? )');
+const insertDuas = db.prepare('INSERT INTO duas (category_id, subcategory_id, title, arabic, transliteration, translation, reference, slug) values (?,?,?,? , ?,?,?,? )');
 
 const jsonData = fs.readFileSync(path.resolve(__dirname, 'data.json'), 'utf8');
 const data = JSON.parse(jsonData);
@@ -35,8 +34,7 @@ db.transaction(() => {
             const subcategoryID = db.prepare('SELECT id FROM subcategories WHERE name = ? AND category_id = ?').get(subCategory.name, categoryID);
             
             for (const dua of subCategory.duas) {
-                insertDuas.run(categoryID, subcategoryID, dua.name, dua.title, dua.arabic, dua.transliteration, dua.translation, dua.reference, dua.slug || dua.title.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-'));
-                
+                insertDuas.run(categoryID, subcategoryID, dua.name, dua.title, dua.arabic, dua.transliteration, dua.translation, dua.reference, dua.slug || dua.title.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-'));         
             }
         }
     }
