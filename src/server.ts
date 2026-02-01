@@ -16,7 +16,7 @@ server.get('/categories', (req: Request, res: Response) => {
     res.json(db.prepare( "SELECT * FROM categories" ).all() )
 });
 
-server.get('/categories/subcategories' , (req: Request, res: Response) => {
+server.get('/subcategories' , (req: Request, res: Response) => {
     res.json(db.prepare('SELECT * FROM subcategories').all())
 });
 

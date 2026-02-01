@@ -119,7 +119,7 @@
     "dev": "ts-node --files src/server.ts",
     "start": "node dist/app.js",
     "build": "tsc",
-    "seed": "ts-node src/db/seed.ts"
+    "seed": "npx ts-node src/db/seedData.ts"
   },
   "repository": {
     "type": "git",
