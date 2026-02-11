@@ -1,46 +1,65 @@
-import express , {Request, Response} from 'express';
-import cors from 'cors';
-import Database from 'better-sqlite3';
+import express, { Request, Response } from "express";
+import cors from "cors";
+import path from "path";
+import Database from "better-sqlite3";
 
 const server = express();
-const port = 4000;
+const PORT = process.env.PORT || 4000;
+
 server.use(cors());
 server.use(express.json());
-const db = new Database('src/db/database.sqlite3');
 
-server.get('/', (req: Request, res: Response) => {
-    res.send("Server Running");
+const dbPath = path.join(process.cwd(), "database.sqlite3");
+const db = new Database(dbPath, { verbose: console.log });
+
+server.get("/", (_req: Request, res: Response) => {
+  res.send("Server Running 🚀");
 });
 
-server.get('/categories', (req: Request, res: Response) => {
-    res.json(db.prepare( "SELECT * FROM categories" ).all() )
+
+server.get("/categories", (_req: Request, res: Response) => {
+  const data = db.prepare("SELECT * FROM categories").all();
+  res.json(data);
 });
 
-server.get('/subcategories' , (req: Request, res: Response) => {
-    res.json(db.prepare('SELECT * FROM subcategories').all())
+
+server.get("/subcategories", (_req: Request, res: Response) => {
+  const data = db.prepare("SELECT * FROM subcategories").all();
+  res.json(data);
 });
 
-server.get('/categories/subcategories/duas', (req: Request, res: Response) => {
-    res.json(db.prepare('SELECT * FROM duas').all());
-});
-
-server.get('/categories/:categoryID/subcategories', (req: Request, res: Response) => {
+server.get(
+  "/categories/:categoryID/subcategories",
+  (req: Request, res: Response) => {
     const categoryID = req.params.categoryID;
-    res.json(db.prepare('SELECT * FROM subcategories WHERE category_id = ?').all(categoryID));
+    const data = db
+      .prepare("SELECT * FROM subcategories WHERE category_id = ?")
+      .all(categoryID);
+
+    res.json(data);
+  }
+);
+
+
+server.get("/duas/:subcategoryID", (req: Request, res: Response) => {
+  const subcategoryID = req.params.subcategoryID;
+  const data = db
+    .prepare("SELECT * FROM duas WHERE subcategory_id = ?")
+    .all(subcategoryID);
+
+  res.json(data);
 });
 
-server.get('/duas/:subcategoryID', (req: Request, res: Response) => {
-    const subcategoryID = req.params.subcategoryID;
-    res.json(db.prepare('SELECT * FROM duas WHERE subcategory_id = ?').all(subcategoryID));
+server.get("/dua/id/:duaID", (req: Request, res: Response) => {
+  const duaID = req.params.duaID;
+  const data = db
+    .prepare("SELECT * FROM duas WHERE id = ?")
+    .get(duaID);
+
+  res.json(data);
 });
 
-server.get('/dua/id/:duaID', (req: Request, res: Response) => {
-    const duaID = req.params.duaID;
-    res.json(db.prepare('SELECT * FROM duas WHERE id = ?').get(duaID));
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} 🔥`);
 });
-
-
-
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-})

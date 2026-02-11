@@ -117,8 +117,8 @@
   },
   "scripts": {
     "dev": "ts-node --files src/server.ts",
-    "start": "node dist/app.js",
     "build": "tsc",
+    "start": "node dist/server.js",
     "seed": "npx ts-node src/db/seedData.ts"
   },
   "repository": {
