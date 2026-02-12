@@ -121,6 +121,9 @@
     "start": "node dist/server.js",
     "seed": "npx ts-node src/db/seedData.ts"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RafiulRifat1/dua-backend.git"
